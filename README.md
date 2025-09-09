@@ -1,12 +1,12 @@
-Exp-No: 02 - Write and simulate seven segment display using Verilog HDL and verify with testbench
-Aim:
+## Exp-No: 02 - Write and simulate seven segment display using Verilog HDL and verify with testbench
+## Aim:
 
   To design and simulate a Seven Segment using Verilog HDL and verify its functionality through a testbench using the Vivado 2023.1 simulation environment.
 Apparatus Required:
 
   Vivado 2023.1
 
-Procedure:
+## Procedure:
 
 
 Launch Vivado Open Vivado 2023.1 by double-clicking the Vivado icon or searching for it in the Start menu.
@@ -20,12 +20,69 @@ Generate Simulation Report Once the simulation is complete, you can generate a s
 Save and Document Results Save your project by clicking File → Save Project. Take screenshots of the waveform window and include them in your lab report to document your results. You can include the timing diagram from the simulation window showing the correct functionality of the Seven Segment across different select inputs and data inputs.
 Close the Simulation Once done, by going to Simulation → "Close Simulation
 
-Input/Output Signal Diagram:
+## Input/Output Signal Diagram:
+<img width="1536" height="1024" alt="486509085-ec53a276-0495-4938-b7a4-1913f8498113" src="https://github.com/user-attachments/assets/93f772b3-2266-47a8-92d0-762d150f7791" />
 
-RTL Code:
+## RTL Code:
+```
+module Sevensegment(bcd,seg);
+input[3:0]bcd;
+output reg[6:0]seg;
+always@(bcd)
+begin
+     case(bcd)
+     4'b0000:seg=7'b0111111;
+     4'b0001:seg=7'b0001010;
+     4'b0010:seg=7'b1110011;
+     4'b0011:seg=7'b1011011;
+     4'b0100:seg=7'b1001110;
+     4'b0101:seg=7'b1011101;
+     4'b0110:seg=7'b1111101;
+     4'b0111:seg=7'b0001011;
+     4'b1000:seg=7'b1111111;
+     4'b1001:seg=7'b1011111;
+     default:seg=7'b0000000;
+     endcase
+end
+endmodule
+```
+## TestBench:
+```
+module Sevensegment_tb;
+  reg [3:0] bcd_tb;
+  wire [6:0] seg_tb;
 
-TestBench:
+  Sevensegment dut(.bcd(bcd_tb),.seg(seg_tb));
 
-Output waveform:
+initial 
+  begin
+    bcd_tb = 4'b0000; 
+    #100;
+    bcd_tb = 4'b0001; 
+    #100;
+    bcd_tb = 4'b0010; 
+    #100;
+    bcd_tb = 4'b0011; 
+    #100;
+    bcd_tb = 4'b0100; 
+    #100;
+    bcd_tb = 4'b0101; 
+    #100;
+    bcd_tb = 4'b0110; 
+    #100;
+    bcd_tb = 4'b0111; 
+    #100;
+    bcd_tb = 4'b1000; 
+    #100;
+    bcd_tb = 4'b1001; 
+    #100;
+  end
+endmodule
+```
+## Output waveform:
 
-Conclusion:
+<img width="1919" height="1199" alt="486508599-0324a268-cd6e-4dde-b632-dfa4ee50bb60" src="https://github.com/user-attachments/assets/0201317b-d51c-4665-a63c-98e8583d88a2" />
+
+## Conclusion:
+
+The Seven Segment Display experiment successfully demonstrated how numerical values (0–9) can be represented using a combination of illuminated segments. By giving the proper binary or BCD inputs to the decoder/driver circuit, the display showed the corresponding digit clearly. This experiment helped in understanding the working principle of segment displays, the concept of active high/active low configurations, and the importance of digital logic in driving display devices. It also established the practical application of combinational logic circuits in real-time devices such as calculators, digital clocks, and measuring instruments.
